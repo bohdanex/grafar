@@ -7,7 +7,7 @@ import { isExisty, makeID } from '../utils';
 import { Pool } from '../array/Pool';
 import { config } from '../config';
 
-const Renderer = THREE.WebGLRenderer.bind(null, {antialias: config.antialias});
+const Renderer = THREE.WebGLRenderer.bind(null, {antialias: config.antialias, alpha: true });
 // FIXME detect
     // renderMode = Detector.webgl? 'webgl': Detector.canvas? 'canvas': 'none',
     // Renderer = {
@@ -25,9 +25,6 @@ export class Panel {
 
         container = container || config.container;
         const containerStyle = window.getComputedStyle(container);
-        const bgcolor = containerStyle.backgroundColor === 'transparent'
-            ? 'white'
-            : containerStyle.backgroundColor;
         const width = parseInt(containerStyle.width);
         const height = parseInt(containerStyle.height);
 
@@ -42,7 +39,7 @@ export class Panel {
         this.renderer = new Renderer();
         this.renderer.antialias = config.antialias;
         this.renderer.setSize(width, height);
-        this.renderer.setClearColor(bgcolor, 1);
+        this.renderer.setClearColor( 0xffffff, 0);
 
         this.controls = new OrbitControls(this.camera, container);
 
